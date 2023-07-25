@@ -1,4 +1,4 @@
-FROM hadoop-hive-spark-base AS base
+FROM mlops-env-base AS base
 FROM continuumio/miniconda3:latest
 
 RUN apt-get -qq update  \
@@ -8,6 +8,7 @@ RUN apt-get -qq update  \
       curl \
       coreutils \
       libc6-dev \
+      curl \
  && rm -rf /var/lib/apt/lists/*
 
 ARG USERNAME=jupyter
@@ -24,6 +25,15 @@ RUN echo "$USERNAME ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/$USERNAME \
 USER $USERNAME
 
 ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64/
+
+# Install Node.js and npm (Node Package Manager)
+RUN set -x \
+&& curl -fsSL https://deb.nodesource.com/setup_16.x | bash - \
+&& apt-get install -y nodejs \
+&& npm install -g  @angular/cli@latest \
+&& ng add @angular/material @angular/cdk\
+&& npm install --save @syncfusion/ej2-angular-buttons @syncfusion/ej2-angular-charts @syncfusion/ej2-angular-grids \
+&& npm install -g jest @types/jest --save-dev
 
 WORKDIR /home/$USERNAME
 COPY code_develoment_env.yml ./

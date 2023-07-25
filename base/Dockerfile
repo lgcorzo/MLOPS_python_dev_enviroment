@@ -29,15 +29,6 @@ USER $USERNAME
 ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64/
 
 ENV PYTHONHASHSEED=1
-ENV PYSPARK_PYTHON=python3
-
-
-RUN sudo pip install -U pip &&\
-    sudo pip install --no-cache-dir \
-    openpyxl \
-    fastparquet \
-    pandas==1.5.3 \
-    pyarrow 
 
 # Entry point
 COPY entrypoint.sh /usr/local/sbin/entrypoint.sh
