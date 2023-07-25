@@ -11,6 +11,15 @@ RUN apt-get -qq update  \
       curl \
  && rm -rf /var/lib/apt/lists/*
 
+ # Install Node.js and npm (Node Package Manager)
+RUN set -x \
+&& curl -fsSL https://deb.nodesource.com/setup_16.x | bash - \
+&& apt-get install -y nodejs \
+&& npm install -g npm@latest \
+&& npm install -g  @angular/cli@latest \
+&& npm install -g jest @types/jest --save-dev 
+
+
 ARG USERNAME=jupyter
 ARG GROUPNAME=jupyter
 ARG UID=1001
@@ -26,22 +35,14 @@ USER $USERNAME
 
 ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64/
 
-# Install Node.js and npm (Node Package Manager)
-RUN set -x \
-&& curl -fsSL https://deb.nodesource.com/setup_16.x | bash - \
-&& apt-get install -y nodejs \
-&& npm install -g  @angular/cli@latest \
-&& ng add @angular/material @angular/cdk\
-&& npm install --save @syncfusion/ej2-angular-buttons @syncfusion/ej2-angular-charts @syncfusion/ej2-angular-grids \
-&& npm install -g jest @types/jest --save-dev
 
 WORKDIR /home/$USERNAME
-COPY code_develoment_env.yml ./
+COPY code_development_env.yml ./
 # The code to run when container is started:
 COPY ./entrypoint.sh ./entrypoint.sh
 RUN sudo chmod +x ./entrypoint.sh
 
 # See this tutorial for details https://pythonspeed.com/articles/activate-conda-dockerfile/
-RUN conda env create -f code_develoment_env.yml
+RUN conda env create -f code_development_env.yml
 ENTRYPOINT ["./entrypoint.sh"]
 

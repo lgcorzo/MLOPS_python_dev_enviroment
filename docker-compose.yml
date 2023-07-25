@@ -9,7 +9,8 @@ services:
         DEV_LOCAL_IP: 172.29.1.7
         DEV_LOCAL_HOSTNAME: dev
       ports:
-        - "4200:4200"
+        - "8001:8001"
+        - "8000:8000"
       volumes:
         - ./dev/home:/home/developer
         - ../Data:/landing
