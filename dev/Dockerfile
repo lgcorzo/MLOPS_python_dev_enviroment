@@ -1,4 +1,4 @@
-FROM mlops-env-base AS base
+FROM mlops-env-base
 FROM continuumio/miniconda3:latest
 
 RUN apt-get -qq update  \
@@ -19,7 +19,6 @@ RUN set -x \
 && npm install -g  @angular/cli@latest \
 && npm install -g jest @types/jest --save-dev 
 
-
 ARG USERNAME=developer
 ARG GROUPNAME=developer
 ARG UID=1001
@@ -34,14 +33,12 @@ RUN echo "$USERNAME ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/$USERNAME \
 USER $USERNAME
 
 ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64/
-
-
 WORKDIR /home/$USERNAME
-COPY code_development_env.yml ./
-# The code to run when container is started:
-RUN conda env create -f code_development_env.yml
+
+COPY code_development_env.yaml ./code_development_env.yaml 
+RUN sudo chmod a+rw ./code_development_env.yaml
 
 COPY run.sh /usr/local/sbin/run.sh
 RUN sudo chmod a+x /usr/local/sbin/run.sh
-CMD ["run.sh"]
 
+ENTRYPOINT ["run.sh"]

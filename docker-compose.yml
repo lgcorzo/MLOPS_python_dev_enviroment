@@ -9,18 +9,13 @@ services:
         DEV_LOCAL_IP: 172.31.1.7
         DEV_LOCAL_HOSTNAME: dev
       ports:
-        - "8001:8001"
-        - "8000:8000"
         - "4200:4200"
       volumes:
-        - ./dev/home:/home/developer
-        - pg_data:/home/developer/repo
+        - ../../repos:/home/developer/repo
       networks:
         devnet:
           ipv4_address: 172.31.1.7
       command: /bin/bash
-volumes:
-  pg_data:
 
 networks:
   devnet:
