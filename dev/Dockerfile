@@ -20,8 +20,8 @@ RUN set -x \
 && npm install -g jest @types/jest --save-dev 
 
 
-ARG USERNAME=jupyter
-ARG GROUPNAME=jupyter
+ARG USERNAME=developer
+ARG GROUPNAME=developer
 ARG UID=1001
 ARG GID=1001
 
@@ -39,10 +39,9 @@ ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64/
 WORKDIR /home/$USERNAME
 COPY code_development_env.yml ./
 # The code to run when container is started:
-COPY ./entrypoint.sh ./entrypoint.sh
-RUN sudo chmod +x ./entrypoint.sh
-
-# See this tutorial for details https://pythonspeed.com/articles/activate-conda-dockerfile/
 RUN conda env create -f code_development_env.yml
-ENTRYPOINT ["./entrypoint.sh"]
+
+COPY run.sh /usr/local/sbin/run.sh
+RUN sudo chmod a+x /usr/local/sbin/run.sh
+CMD ["run.sh"]
 

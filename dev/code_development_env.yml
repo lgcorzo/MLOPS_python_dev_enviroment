@@ -1,28 +1,27 @@
 channels:
   - conda-forge
+  - defaults
 dependencies:
-  - python=3.8.*
-  - pandas=1.5.3
+  - python=3.8.16
   - pip=20.2.4
-  - nb_conda_kernels
   - pip:
-    - azureml-core==1.45.0.post2
-    - azureml-sdk==1.45.0
-    - azure-identity
-    - azure-keyvault-secrets
-    - azure-core==1.25.1
+    - dash==2.6.2
+    - dash-extensions==0.0.13
     - flake8
-    - flake8-formatter-junit-xml==0.0.*
-    - cloudpickle==1.2.2
-    - numpy==1.21.4
-    - pytest
-    - pytest-cov
-    - python-dotenv
-    - scikit-learn==0.24.0
-    - tqdm==4.62.*
-    - fastparquet
+    - flask==2.2.2
+    - numpy==1.23.3
+    - pandas==1.5.0
+    - pytest==7.1.2
+    - pytest-cov==3.0.0
+    - python-dotenv==1.0.0
+    - requests==2.28.1
+    - scikit-learn==1.1.2
+    - tqdm==4.64.0
+    - gunicorn
+    - pyarmor
     - autopep8
+    - fastparquet
+    - transformers[torch]
     - ipykernel
-    - pyarrow
-
+    
 name: code_development_env

@@ -14,8 +14,8 @@ RUN apt-get -qq update  \
       libc6-dev \
  && rm -rf /var/lib/apt/lists/*
 
-ARG USERNAME=jupyter
-ARG GROUPNAME=jupyter
+ARG USERNAME=developer
+ARG GROUPNAME=developer
 ARG UID=1001
 ARG GID=1001
 
@@ -25,9 +25,7 @@ RUN echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
  && useradd -m -s /bin/bash -u $UID -g $GID $USERNAME
 
 USER $USERNAME
-
 ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64/
-
 ENV PYTHONHASHSEED=1
 
 # Entry point
